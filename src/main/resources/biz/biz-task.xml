@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+    <!-- 测试task -->
+    <bean id="testTask" class="cn.lt.gant.service.task.TestTask"/>
+
+    <!-- 任务调度 -->
+    <task:scheduled-tasks>
+        <!--每隔5分钟执行一次-->
+        <task:scheduled ref="testTask" method="run" cron="0/1 * * * * ?"/>
+    </task:scheduled-tasks>
+
+</beans>

@@ -132,7 +132,7 @@
     <!--<logger name="org.eclipse.jetty" level="info" additivity="false"/>-->
 
     <!-- 定时任务日志文件 （指定包下的日志）-->
-    <logger name="cn.lt.gant.service.user.UserService" level="debug" additivity="false">
+    <logger name="cn.lt.gant.service.task" level="debug" additivity="false">
         <appender-ref ref="file-task"/>
     </logger>
 
