@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lt.gant.dal.mapper.main.user.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.lt.gant.dal.entity.main.user.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="POLICE_NUM" jdbcType="VARCHAR" property="policeNum" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ID_CARD_NUM" jdbcType="VARCHAR" property="idCardNum" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="AVATAR" jdbcType="VARCHAR" property="avatar" />
+    <result column="SIGNATURE" jdbcType="VARCHAR" property="signature" />
+    <result column="AUTH_TYPE" jdbcType="BIGINT" property="authType" />
+    <result column="DEPT_ID" jdbcType="BIGINT" property="deptId" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="LOGIN_WAY" jdbcType="VARCHAR" property="loginWay" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="PWD" jdbcType="VARCHAR" property="pwd" />
+    <result column="DEVICE_TYPE" jdbcType="BIGINT" property="deviceType" />
+    <result column="PUSH_TOKEN" jdbcType="VARCHAR" property="pushToken" />
+    <result column="DEVICE_NAME" jdbcType="VARCHAR" property="deviceName" />
+    <result column="MAC" jdbcType="VARCHAR" property="mac" />
+    <result column="REG_IP" jdbcType="VARCHAR" property="regIp" />
+    <result column="LAST_IP" jdbcType="VARCHAR" property="lastIp" />
+    <result column="LOGIN_SUM" jdbcType="VARCHAR" property="loginSum" />
+    <result column="BRANCH_ID" jdbcType="BIGINT" property="branchId" />
+    <result column="SHORT_PHONE" jdbcType="VARCHAR" property="shortPhone" />
+    <result column="SEX" jdbcType="BIGINT" property="sex" />
+    <result column="USER_ADDRESS" jdbcType="VARCHAR" property="userAddress" />
+    <result column="USER_BIRTH" jdbcType="VARCHAR" property="userBirth" />
+    <result column="URGENT_PERSON" jdbcType="VARCHAR" property="urgentPerson" />
+    <result column="URGENT_PHONE_NUM" jdbcType="VARCHAR" property="urgentPhoneNum" />
+    <result column="USER_NUM" jdbcType="VARCHAR" property="userNum" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="EDUCATION" jdbcType="BIGINT" property="education" />
+    <result column="POST" jdbcType="VARCHAR" property="post" />
+    <result column="POST_LEVEL" jdbcType="BIGINT" property="postLevel" />
+    <result column="NATIVE_PLACE" jdbcType="VARCHAR" property="nativePlace" />
+    <result column="ATTLOGS_ID" jdbcType="INTEGER" property="attlogsId" />
+    <result column="USER_NICKNAME" jdbcType="VARCHAR" property="userNickname" />
+    <result column="SD_ID" jdbcType="BIGINT" property="sdId" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_UID" jdbcType="BIGINT" property="createUid" />
+    <result column="MODIFIED_TIME" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="MODIFIED_UID" jdbcType="BIGINT" property="modifiedUid" />
+    <result column="ROLES" jdbcType="LONGVARCHAR" property="roles" />
+    <result column="PERMISSIONS" jdbcType="LONGVARCHAR" property="permissions" />
+  </resultMap>
+</mapper>

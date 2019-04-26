@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mv="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--扫描包-->
+    <context:component-scan base-package="cn.lt.gant.web"/>
+
+    <!--注解配置-->
+    <mv:annotation-driven/>
+
+    <mvc:interceptors>
+        <!-- 页面权限拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/api/open/**"/>
+            <mvc:exclude-mapping path="/assets/**"/>
+            <bean class="cn.lt.gant.web.interceptor.HandlerInterceptor"/>
+        </mvc:interceptor>
+        <!-- 第三方对接接口权限拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/api/open/**"/>
+            <bean class="cn.lt.gant.web.interceptor.OpenApiInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--json为null不输出-->
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="serializationInclusion">
+            <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+        </property>
+    </bean>
+
+    <!--内容协商处理器-->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+
+        <!-- 配置 -->
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+
+                <!-- 扩展名至mediaType的映射,即 /param.json => application/json -->
+                <property name="mediaTypes">
+                    <map>
+                        <entry key="htm" value="text/html"/>
+                        <entry key="html" value="text/html"/>
+                        <entry key="json" value="application/json"/>
+                        <entry key="jsonp" value="application/javascript"/>
+                        <entry key="xls" value="application/vnd.ms-excel"/>
+                    </map>
+                </property>
+
+                <!-- 设置为true以忽略对Accept Header的支持 -->
+                <property name="ignoreAcceptHeader" value="true"/>
+
+                <!-- 在没有扩展名时即: "/param" 时的默认展现形式 -->
+                <property name="defaultContentType" value="text/html"/>
+
+            </bean>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <!--有ftl找ftl,没有找jsp,ftl jsp都有  优先ftl-->
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                    <property name="contentType" value="text/html; charset=utf-8"/>
+                    <property name="cache" value="true" />
+                    <property name="suffix" value=".ftl" />
+                    <property name="order" value="0" />
+                </bean>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/view/jsp/"/>
+                    <property name="suffix" value=".jsp"/>
+                    <property name="order" value="1" />
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <property name="objectMapper" ref="objectMapper"/>
+                </bean>
+            </list>
+
+        </property>
+    </bean>
+
+    <!--freemarker路径配置-->
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="freemarkerSettings">
+            <bean
+                    class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="properties">
+                    <props>
+                        <prop key="default_encoding">utf-8</prop>
+                        <prop key="output_encoding">utf-8</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+        <property name="templateLoaderPath">
+            <value>/WEB-INF/view/ftl/</value>
+        </property>
+    </bean>
+
+</beans>
