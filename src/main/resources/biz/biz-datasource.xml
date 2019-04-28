@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:tx="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--扫描dao/service-->
     <context:component-scan base-package="cn.lt.gant.service,cn.lt.gant.dal.dao"/>
@@ -12,11 +12,7 @@
     <context:property-placeholder location="classpath:/resources/jdbc.properties"/>
 
     <!-- 数据源基类 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+    <bean id="parentDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="filters" value="stat"/>
         <property name="maxActive" value="20"/>
         <property name="initialSize" value="1"/>
@@ -24,7 +20,6 @@
         <property name="minIdle" value="1"/>
         <property name="timeBetweenEvictionRunsMillis" value="60000"/>
         <property name="minEvictableIdleTimeMillis" value="300000"/>
-        <property name="validationQuery" value="select 1 from dual"/>
         <property name="testWhileIdle" value="true"/>
         <property name="testOnBorrow" value="false"/>
         <property name="testOnReturn" value="false"/>
@@ -32,10 +27,47 @@
         <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
     </bean>
 
+    <!--主数据源-->
+    <bean id="mainDataSource" parent="parentDataSource">
+        <property name="driverClassName" value="${jdbc.main.driverClassName}"/>
+        <property name="url" value="${jdbc.main.url}"/>
+        <property name="username" value="${jdbc.main.username}"/>
+        <property name="password" value="${jdbc.main.password}"/>
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+
+    <!--其它数据源-->
+    <bean id="otherDataSource" parent="parentDataSource">
+        <property name="driverClassName" value="${jdbc.other.driverClassName}"/>
+        <property name="url" value="${jdbc.other.url}"/>
+        <property name="username" value="${jdbc.other.username}"/>
+        <property name="password" value="${jdbc.other.password}"/>
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+
+    <!--多数据源配置-->
+    <bean id="multipleDataSource" class="cn.lt.gant.dal.util.MultipleDataSource">
+            <property name="defaultTargetDataSource" ref="mainDataSource"/>
+            <property name="targetDataSources">
+                <map>
+                    <entry key="MAIN" value-ref="mainDataSource"/>
+                    <entry key="OTHER" value-ref="otherDataSource"/>
+                </map>
+            </property>
+    </bean>
+
+    <!-- 切入Mapper自动适配到不同的数据源 -->
+    <bean id="multipleDataSourceAspectAdvice" class="cn.lt.gant.dal.util.MultipleDataSourceAspectAdvice"/>
+    <aop:config>
+        <aop:aspect id="multipleDataSourceAspectAdvice" ref="multipleDataSourceAspectAdvice">
+            <aop:around method="doAround" pointcut="execution(* cn.lt.gant.dal.mapper..*(..))"/>
+        </aop:aspect>
+    </aop:config>
+
     <!--mybatis-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="multipleDataSource"/>
     </bean>
 
     <!--扫描mapper(通用mapper不可以被扫描到,也就是mapper.base)-->
@@ -46,7 +78,7 @@
 
     <!--事务管理器-->
     <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="multipleDataSource"/>
     </bean>
 
     <!--事务注解-->
