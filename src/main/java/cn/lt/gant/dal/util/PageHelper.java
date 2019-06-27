@@ -26,7 +26,7 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
     /**
      * 更具数据源类型的不同动态选择不同的
      */
-    private Map<DataSourceEnum, SqlUtil> sqlUtilMap = Maps.newConcurrentHashMap();
+    private Map<DataSourceEnum, SqlUtil> sqlUtilMap = Maps.newConcurrentMap();
 
     /**
      * Mybatis拦截器方法

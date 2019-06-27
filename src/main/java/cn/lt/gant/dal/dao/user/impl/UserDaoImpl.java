@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 /**
  * UserDao
  * 
- * @author ulf 2019-4-25
+ * @author Administrator 2019-6-27
  * @since 南阳理工学院
  */
 @Repository
@@ -31,5 +31,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     protected BaseMapper<User> getMapper() {
         return userMapper;
+    }
+
+    @Override
+    public void updateById(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }

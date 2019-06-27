@@ -13,7 +13,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 public class MultipleDataSourceAspectAdvice {
 
     /**
-     * 拦截切面，获取目标数据源(切面表达式请到biz-database.xml里面修改)
+     * 拦截切面，获取目标数据源(切面表达式biz-database.xml里面修改)
      *
      * @param jp
      * @return

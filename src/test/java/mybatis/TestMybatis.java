@@ -15,7 +15,7 @@ public class TestMybatis extends TestWeb {
     @Test
     public void testTkMapper() {
         User user = new User();
-        user.setUserId(1L);
+        user.setId(1);
         userMapper.selectOne(user);
     }
 }

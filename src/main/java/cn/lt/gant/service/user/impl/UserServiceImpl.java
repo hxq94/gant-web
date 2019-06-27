@@ -12,14 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * UserService
  * 
- * @author ulf 2019-4-25
+ * @author Administrator 2019-6-27
  * @since 南阳理工学院
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
-
-
+    
     /**
      * UserDao
      */
@@ -34,5 +33,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     protected BaseDao<User> getDao() {
         return userDao;
+    }
+
+    @Override
+    public void updateById() {
+        User user = new User();
+        user.setId(1);
+        user.setPassword("987456");
+        userDao.updateById(user);
+        System.out.println(1/0);
     }
 }

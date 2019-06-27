@@ -6,8 +6,9 @@ import cn.lt.gant.dal.entity.main.user.User;
 /**
  * UserDao
  * 
- * @author ulf 2019-4-25
+ * @author Administrator 2019-6-27
  * @since 南阳理工学院
  */
 public interface UserDao extends BaseDao<User> {
+    void updateById(User user);
 }

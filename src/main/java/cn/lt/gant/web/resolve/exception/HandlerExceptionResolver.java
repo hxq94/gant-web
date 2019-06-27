@@ -5,6 +5,7 @@ import cn.lt.gant.common.response.ResponseCode;
 import cn.lt.gant.dal.util.DataPipe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author lt
  * @version 1.0
  */
+@Component
 public class HandlerExceptionResolver implements org.springframework.web.servlet.HandlerExceptionResolver {
 
     /**
