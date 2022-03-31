@@ -18,7 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spring.version>5.1.6.RELEASE</spring.version>
-        <spring.webmvc.version>5.1.6.RELEASE</spring.webmvc.version>
+        <spring.webmvc.version>5.3.18</spring.webmvc.version>
         <spring.jdbc.version>5.1.6.RELEASE</spring.jdbc.version>
         <alibaba.druid.version>1.1.16</alibaba.druid.version>
         <mybatis.version>3.5.1</mybatis.version>
