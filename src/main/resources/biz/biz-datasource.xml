@@ -55,13 +55,13 @@
 
     <!--多数据源配置-->
     <bean id="multipleDataSource" class="cn.lt.gant.dal.util.MultipleDataSource">
-            <property name="defaultTargetDataSource" ref="mainDataSource"/>
-            <property name="targetDataSources">
-                <map>
-                    <entry key="MAIN" value-ref="mainDataSource"/>
-                    <entry key="OTHER" value-ref="otherDataSource"/>
-                </map>
-            </property>
+        <property name="defaultTargetDataSource" ref="mainDataSource"/>
+        <property name="targetDataSources">
+            <map>
+                <entry key="MAIN" value-ref="mainDataSource"/>
+                <entry key="OTHER" value-ref="otherDataSource"/>
+            </map>
+        </property>
     </bean>
 
     <!-- 切入Mapper自动适配到不同的数据源 -->

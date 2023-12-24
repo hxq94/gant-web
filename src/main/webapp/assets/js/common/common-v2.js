@@ -42,10 +42,10 @@
                     $(item).text(title.substr(0, 10) + "...");
                 }
             }
-            $(item).on("mouseover",function(event){
+            $(item).on("mouseover", function (event) {
                 var titleLength = $(item).text().length;
-                if(titleLength>10){
-                    layer.tips(title,$(item));
+                if (titleLength > 10) {
+                    layer.tips(title, $(item));
                 }
             })
         })
@@ -65,7 +65,7 @@
         var str = arguments[0];
         for (var i = 1; i < arguments.length; i++) {
             var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
-            str    = str.replace(re, arguments[i]);
+            str = str.replace(re, arguments[i]);
         }
         return str;
     };
@@ -108,7 +108,7 @@
         //构造一个含有目标参数的正则表达式对象
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         //匹配目标参数
-        var r   = window.location.search.substr(1).match(reg);
+        var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         //返回参数值
         return defValue;
@@ -160,16 +160,16 @@
 
         //默认参数
         var defaults = {
-            format             : 'YYYY-MM-DD hh:mm:ss',
-            min                : '2000-01-01',
-            max                : laydate.now(),
-            istoday            : false,
-            event              : 'focus',
+            format: 'YYYY-MM-DD hh:mm:ss',
+            min: '2000-01-01',
+            max: laydate.now(),
+            istoday: false,
+            event: 'focus',
             startChooseCallback: function (start, end, chooseDate) {
-                end.min   = chooseDate;
+                end.min = chooseDate;
                 end.start = chooseDate;
             },
-            endChooseCallback  : function (start, end, chooseDate) {
+            endChooseCallback: function (start, end, chooseDate) {
                 //start.min = chooseDate;
                 //start.start = chooseDate;
             }
@@ -180,26 +180,26 @@
 
         //开始
         var start = {
-            elem   : opts.start,
-            format : opts.format,
-            max    : opts.max,
+            elem: opts.start,
+            format: opts.format,
+            max: opts.max,
             istoday: opts.istoday,
-            choose : function (chooseDate) {
+            choose: function (chooseDate) {
                 opts.startChooseCallback && opts.startChooseCallback(start, end, chooseDate);
             },
-            event  : opts.event
+            event: opts.event
         };
 
         //结束
         var end = {
-            elem   : opts.end,
-            format : opts.format,
-            min    : opts.min,
+            elem: opts.end,
+            format: opts.format,
+            min: opts.min,
             istoday: opts.istoday,
-            choose : function (chooseDate) {
+            choose: function (chooseDate) {
                 opts.endChooseCallback && opts.endChooseCallback(start, end, chooseDate);
             },
-            event  : opts.event
+            event: opts.event
         };
 
         laydate(start);
@@ -231,7 +231,7 @@
 
         //默认参数
         var defaults = {
-            toolbar   : [
+            toolbar: [
                 'title',
                 'bold',
                 'italic',
@@ -288,7 +288,7 @@
         var defaults = {
             tagClass: 'label label-warning',
             //focusClass: 'my-focus-class',
-            maxTags : 48,
+            maxTags: 48,
             maxChars: 48,
             readonly: false
         };
@@ -303,7 +303,7 @@
         $.each(selectArray, function (idx, select) {
             var obj = $(select);
             obj.tagsinput(opts);
-            if (opts.readonly || typeof(obj.attr("readonly")) !== "undefined") {
+            if (opts.readonly || typeof (obj.attr("readonly")) !== "undefined") {
                 var tags = obj.prev('div.bootstrap-tagsinput');
                 tags.addClass('readonly');
             }
@@ -323,7 +323,7 @@
                 inputs += kirin.format("<input type='hidden' name='{0}' value='{1}'>", key, value);
             }
         });
-        var html   = kirin.format("<form action='{0}' method='{1}'>{2}</form>", url, (method || 'post'), inputs);
+        var html = kirin.format("<form action='{0}' method='{1}'>{2}</form>", url, (method || 'post'), inputs);
         $(html).appendTo('body').submit().remove();
     };
 
@@ -337,8 +337,8 @@
     kirin.exportExcel = function (fileName, dataJson, sheetName, method) {
         kirin.download("/Ajax/ExcelExport.ashx",
             {
-                fileName : fileName,
-                dataJson : JSON.stringify(dataJson),
+                fileName: fileName,
+                dataJson: JSON.stringify(dataJson),
                 sheetName: sheetName
             },
             method);
@@ -347,7 +347,7 @@
 
     kirin.exportEvent = function (tableId, tableTempId, igCol, exportUrl, exportParams) {
         var opsCol = "";
-        if (typeof(igCol) != "undefined" && igCol != null && "" != igCol) {
+        if (typeof (igCol) != "undefined" && igCol != null && "" != igCol) {
             opsCol = "[" + igCol + "]";
         }
         // 获取所有数据
@@ -356,12 +356,17 @@
             if (meta && meta.code === 200) {
                 //渲染
                 var griddata = resdata.response.list;
-                var gettpl   = document.getElementById(tableTempId).innerHTML;
+                var gettpl = document.getElementById(tableTempId).innerHTML;
                 laytpl(gettpl).render(griddata, function (html) {
-                    var theadHtml      = $("#" + tableId).find("thead").html();
-                    var allHtml        = "<table><thead>" + theadHtml + "</thead><tbody>" + html + "</tbody></table>";
+                    var theadHtml = $("#" + tableId).find("thead").html();
+                    var allHtml = "<table><thead>" + theadHtml + "</thead><tbody>" + html + "</tbody></table>";
                     var exportFileName = $('.custom-font-localmenu').text();
-                    $(allHtml).tableExport({type: 'excel', escape: 'false', ignoreColumn: opsCol, fileName: exportFileName});
+                    $(allHtml).tableExport({
+                        type: 'excel',
+                        escape: 'false',
+                        ignoreColumn: opsCol,
+                        fileName: exportFileName
+                    });
                 });
             } else {
                 layer.alert(meta.message, 0);
@@ -380,11 +385,11 @@
         // 默认参数
         var defaults = {
             traditional: true,
-            dataType   : 'json',
-            type       : 'GET',
-            serialize  : null,
-            debug      : false,
-            async      : true
+            dataType: 'json',
+            type: 'GET',
+            serialize: null,
+            debug: false,
+            async: true
         };
 
         // 覆盖插件默认参数
@@ -394,13 +399,13 @@
 
         //序列化
         if (opts.serialize) {
-            var data      = {},
+            var data = {},
                 serialize = $(opts.serialize);
 
             // 直接提取
             $(serialize).filter('input[type!=checkbox],select,textarea').filter('input[type!=radio],select,textarea').each(function () {
-                var that      = $(this),
-                    name      = that.attr('name'),
+                var that = $(this),
+                    name = that.attr('name'),
                     nowValues = that.val();
 
                 name || alert('序列化未设置元素[name]属性：' + that.html());
@@ -427,9 +432,9 @@
 
             //checkbox 如果加了data-set 则使值相加
             $(serialize).filter('input[type=checkbox]:checked').each(function () {
-                var that      = $(this),
-                    name      = that.attr('name'),
-                    bitSet    = (that.data('set') == true),
+                var that = $(this),
+                    name = that.attr('name'),
+                    bitSet = (that.data('set') == true),
                     nowValues = $.trim(that.val());
 
                 if (!nowValues) {
@@ -460,8 +465,8 @@
 
             //radio
             $(serialize).filter('input[type=radio]:checked').each(function () {
-                var that      = $(this),
-                    name      = that.attr('name'),
+                var that = $(this),
+                    name = that.attr('name'),
                     nowValues = $.trim(that.val());
 
                 if (!nowValues) {
@@ -486,8 +491,8 @@
         //服务端不支持 DELETE、PUT等操作
         var type = opts.type.toUpperCase();
         if ($.inArray(opts.type.toUpperCase(), ['GET', 'POST']) === -1) {
-            opts.type       = 'POST';
-            opts.data       = opts.data || {};
+            opts.type = 'POST';
+            opts.data = opts.data || {};
             opts.data[type] = true;
         }
 
@@ -500,9 +505,9 @@
 
             // 服务器成功返回
             if (meta.code === 200) {
-                setTimeout(function(){
+                setTimeout(function () {
                     titleMaxLength()
-                },20);
+                }, 20);
                 defer.resolve(response);
             } else {
                 switch (meta.code) {
@@ -564,11 +569,11 @@
 
             // 默认参数
             var defaults = {
-                pageInfo  : '#page-info',
-                pageBar   : '#page-bar',
-                pageNum   : 1,
-                pageSize  : 10,
-                transform : null,
+                pageInfo: '#page-info',
+                pageBar: '#page-bar',
+                pageNum: 1,
+                pageSize: 10,
+                transform: null,
                 noDataText: '暂无数据'
             };
 
@@ -627,7 +632,7 @@
 
                         //如果数据为空的情况下，暂无数据
                         var count = $('thead tr th', opts.view).length;
-                        var html  = kirin.format('<tr class="u-tr-no-data"><th colspan="{0}">{1}</th></tr>', count, opts.noDataText);
+                        var html = kirin.format('<tr class="u-tr-no-data"><th colspan="{0}">{1}</th></tr>', count, opts.noDataText);
                         $('tbody', opts.view).html(html);
                     } else {
 
@@ -640,12 +645,12 @@
 
                     //分页
                     laypage({
-                        cont : $(opts.pageBar),
+                        cont: $(opts.pageBar),
                         pages: data.pages,
-                        curr : data.pageNum,
-                        jump : function (e, first) {
+                        curr: data.pageNum,
+                        jump: function (e, first) {
                             if (!first) {
-                                opts.pageNum  = e.curr;
+                                opts.pageNum = e.curr;
                                 opts.pageSize = data.pageSize;
                                 that.jumpPageing(opts);
                             }
@@ -655,7 +660,7 @@
                             var pageSize = $('.page-size', pageInfo);
                             pageSize.val(data.pageSize);
                             pageSize.on('change', function () {
-                                opts.pageNum  = 1;
+                                opts.pageNum = 1;
                                 opts.pageSize = $('.page-size', pageInfo).val();
                                 that.jumpPageing(opts);
                             });
@@ -686,8 +691,8 @@
 
             // 默认参数
             var defaults = {
-                noDataClass : 'u-tr-no-data-min',
-                noDataText  : '暂无数据'
+                noDataClass: 'u-tr-no-data-min',
+                noDataText: '暂无数据'
             };
 
             // 覆盖插件默认参数
@@ -770,11 +775,11 @@
 
             /**
              * 添加数据到第一行
-             * 
+             *
              * @param data
              */
-            pushDataToFirst:function (data) {
-                if(data){
+            pushDataToFirst: function (data) {
+                if (data) {
                     this._dataList.unshift(data);
                 }
                 this.init();
@@ -816,16 +821,16 @@
      * 弹出窗口
      * @type {{open: Function, done: Function, notify: Function, fail: Function}}
      */
-        kirin.popup = {
-        open     : function (options) {
+    kirin.popup = {
+        open: function (options) {
             // 默认参数
             var defaults = {
-                type      : 2,
-                title     : false,
+                type: 2,
+                title: false,
                 shadeClose: false,
-                shade     : [0.5, '#000'],
-                maxmin    : true,
-                scrollbar : false
+                shade: [0.5, '#000'],
+                maxmin: true,
+                scrollbar: false
             };
 
             // 覆盖插件默认参数
@@ -849,26 +854,26 @@
             return defer.promise();
         },
         shareData: function () {
-            var i   = top.layer.getFrameIndex(window.name);
+            var i = top.layer.getFrameIndex(window.name);
             var key = 'kirin.popup.data.' + i;
             return top.window.cacheMap[key];
         },
-        success  : function (data) {
-            var i     = top.layer.getFrameIndex(window.name);
-            var key   = 'kirin.popup.open.' + i;
+        success: function (data) {
+            var i = top.layer.getFrameIndex(window.name);
+            var key = 'kirin.popup.open.' + i;
             var defer = top.window.cacheMap[key];
             defer.resolve(data);
             top.window.layer.close(i);
         },
-        notify   : function (data) {
-            var i     = top.layer.getFrameIndex(window.name);
-            var key   = 'kirin.popup.open.' + i;
+        notify: function (data) {
+            var i = top.layer.getFrameIndex(window.name);
+            var key = 'kirin.popup.open.' + i;
             var defer = top.window.cacheMap[key];
             defer.notify(data);
         },
-        close    : function (data) {
-            var i     = top.layer.getFrameIndex(window.name);
-            var key   = 'kirin.popup.open.' + i;
+        close: function (data) {
+            var i = top.layer.getFrameIndex(window.name);
+            var key = 'kirin.popup.open.' + i;
             var defer = top.window.cacheMap[key];
 
             delete top.window.cacheMap[key];
@@ -906,12 +911,12 @@
          */
         deptSelect: function (data, callback) {
             kirin.popup.open({
-                title    : '单位选择',
-                width    : 750,
-                height   : 450,
-                maxmin   : false,
+                title: '单位选择',
+                width: 750,
+                height: 450,
+                maxmin: false,
                 shareData: data,
-                content  : '/widget/dept-select.html'
+                content: '/widget/dept-select.html'
             }).done(function (data) {
                 callback(data);
             });

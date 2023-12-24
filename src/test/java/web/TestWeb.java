@@ -1,6 +1,10 @@
 package web;
 
+import cn.lt.gant.service.user.UserService;
+import com.google.common.collect.Lists;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -15,4 +19,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:biz/**/biz-*.xml")
 public class TestWeb {
 
+    @Autowired
+    private UserService userService;
+
+    @Test
+    public void getUserService() {
+        userService.updateById();
+    }
+
+    @Test
+    public void asyncSendMessageAfterTransactionCommit(){
+        userService.asyncSendMessageAfterTransactionCommit();
+    }
+
+    @Test
+    public void testMybatis(){
+
+        for (Integer i:Lists.newArrayList(1,2)){
+            System.out.println(i);
+        }
+
+        userService.selectList();
+    }
 }

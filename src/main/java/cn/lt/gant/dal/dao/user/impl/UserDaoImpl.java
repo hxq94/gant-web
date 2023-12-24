@@ -5,18 +5,20 @@ import cn.lt.gant.dal.dao.user.UserDao;
 import cn.lt.gant.dal.entity.main.user.User;
 import cn.lt.gant.dal.mapper.base.BaseMapper;
 import cn.lt.gant.dal.mapper.main.user.UserMapper;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 /**
  * UserDao
- * 
+ *
  * @author Administrator 2019-6-27
  * @since 南阳理工学院
  */
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
-    
+
     /**
      * UserMapper
      */
@@ -36,5 +38,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     public void updateById(User user) {
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    public void updateById2(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void selectList() {
+        userMapper.selectBYCache();
     }
 }

@@ -72,16 +72,17 @@
             <list>
                 <!--有ftl找ftl,没有找jsp,ftl jsp都有  优先ftl-->
                 <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
-                <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                <bean id="freeMarkerViewResolver"
+                      class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
                     <property name="contentType" value="text/html; charset=utf-8"/>
-                    <property name="cache" value="true" />
-                    <property name="suffix" value=".ftl" />
-                    <property name="order" value="0" />
+                    <property name="cache" value="true"/>
+                    <property name="suffix" value=".ftl"/>
+                    <property name="order" value="0"/>
                 </bean>
                 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
                     <property name="prefix" value="/WEB-INF/view/jsp/"/>
                     <property name="suffix" value=".jsp"/>
-                    <property name="order" value="1" />
+                    <property name="order" value="1"/>
                 </bean>
             </list>
         </property>

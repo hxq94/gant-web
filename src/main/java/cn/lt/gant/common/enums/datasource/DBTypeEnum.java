@@ -2,9 +2,9 @@ package cn.lt.gant.common.enums.datasource;
 
 public enum DBTypeEnum {
 
-    Oracle,MySQL,SQLServer;
+    Oracle, MySQL, SQLServer;
 
-    private DBTypeEnum(){
+    private DBTypeEnum() {
 
     }
 }

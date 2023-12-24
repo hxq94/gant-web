@@ -7,8 +7,7 @@ import org.mybatis.generator.api.dom.java.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicePlugin extends BasePluginAdapter
-{
+public class ServicePlugin extends BasePluginAdapter {
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(final IntrospectedTable introspectedTable) {
         if (!"true".equalsIgnoreCase(this.getProperties().getProperty("isCreate", "false"))) {
@@ -23,8 +22,8 @@ public class ServicePlugin extends BasePluginAdapter
         interfaceClass.addImportedType(new FullyQualifiedJavaType(this.baseService));
         interfaceClass.addImportedType(new FullyQualifiedJavaType(this.entityPackage + "." + entityName));
         interfaceClass.addSuperInterface(super.buildFullyQualifiedJavaType(this.baseService, entityName));
-        GeneratorUtil.fillJavaDocLine((JavaElement)interfaceClass, tableComment, ClassType.SERVICE);
-        serviceList.add(super.buildGeneratedJavaFile((CompilationUnit)interfaceClass));
+        GeneratorUtil.fillJavaDocLine((JavaElement) interfaceClass, tableComment, ClassType.SERVICE);
+        serviceList.add(super.buildGeneratedJavaFile((CompilationUnit) interfaceClass));
         final String implementsName = this.targetPackage + ".impl." + entityName + "ServiceImpl";
         final TopLevelClass implementsClass = new TopLevelClass(implementsName);
         implementsClass.setVisibility(JavaVisibility.PUBLIC);
@@ -39,7 +38,7 @@ public class ServicePlugin extends BasePluginAdapter
         implementsClass.addImportedType(interfaceName);
         implementsClass.addSuperInterface(new FullyQualifiedJavaType(interfaceName));
         implementsClass.setSuperClass(super.buildFullyQualifiedJavaType(this.baseServiceImpl, entityName));
-        GeneratorUtil.fillJavaDocLine((JavaElement)implementsClass, tableComment, ClassType.SERVICE);
+        GeneratorUtil.fillJavaDocLine((JavaElement) implementsClass, tableComment, ClassType.SERVICE);
         implementsClass.addAnnotation("@Service");
         implementsClass.addAnnotation("@Transactional(rollbackFor = Exception.class)");
         final String filedName = this.toLowerFirstChar(entityName) + "Dao";
@@ -62,7 +61,7 @@ public class ServicePlugin extends BasePluginAdapter
         getDAOMethod.addJavaDocLine(" * @return");
         getDAOMethod.addJavaDocLine(" */");
         implementsClass.addMethod(getDAOMethod);
-        serviceList.add(super.buildGeneratedJavaFile((CompilationUnit)implementsClass));
+        serviceList.add(super.buildGeneratedJavaFile((CompilationUnit) implementsClass));
         return serviceList;
     }
 }
