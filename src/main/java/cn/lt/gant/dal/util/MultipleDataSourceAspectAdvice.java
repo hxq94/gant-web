@@ -27,7 +27,7 @@ public class MultipleDataSourceAspectAdvice {
         if (interfaceList != null && interfaceList.length > 0) {
             ds = interfaceList[0].getAnnotation(DataSourceType.class);
         }
-
+        System.out.println("llll");
         if (MultipleDataSource.getDataSourceKey() == null) {
             if (ds == null) {
                 // 默认主库
