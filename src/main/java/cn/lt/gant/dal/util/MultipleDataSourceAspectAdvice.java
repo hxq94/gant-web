@@ -37,6 +37,7 @@ public class MultipleDataSourceAspectAdvice {
             }
         }
 
+        System.out.println("log....");
         try {
             //调用被拦截方法
             return jp.proceed();
